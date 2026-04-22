@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const tokens = {
   primary: "#0D1B2A",
@@ -27,7 +27,12 @@ const screens = [
 
 // ── Shared Components ──────────────────────────────────────
 
-const Phone = ({ children, title, onBack, showBack }) => (
+const Phone = ({ children, title, onBack, showBack }: {
+  children: React.ReactNode;
+  title: string;
+  onBack?: () => void;
+  showBack?: boolean;
+}) => (
   <div style={{
     width: 375,
     minHeight: 812,
@@ -151,8 +156,12 @@ const TabBar = () => {
   );
 };
 
-const Card = ({ children, style = {}, onClick }) => (
-  <div onClick={onClick} style={{
+const Card = ({ children, style = {}, onClick, ...props }: {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+  onClick?: () => void;
+} & React.HTMLAttributes<HTMLDivElement>) => (
+  <div {...props} onClick={onClick} style={{
     background: tokens.bgMain,
     border: `1px solid ${tokens.bgSubtle}`,
     boxShadow: tokens.shadow,
@@ -181,7 +190,12 @@ const Badge = ({ color, children }) => (
   }}>{children}</span>
 );
 
-const Btn = ({ children, variant = "primary", onClick, style = {} }) => (
+const Btn = ({ children, variant = "primary", onClick, style = {} }: {
+  children: React.ReactNode;
+  variant?: "primary" | "ghost" | "secondary";
+  onClick?: () => void;
+  style?: React.CSSProperties;
+}) => (
   <button onClick={onClick} style={{
     background: variant === "primary" ? tokens.accent : variant === "ghost" ? "transparent" : tokens.bgSubtle,
     color: variant === "primary" ? "white" : variant === "ghost" ? tokens.accent : tokens.text,
@@ -637,7 +651,7 @@ const TarjousValmis = ({ onNav }) => (
   </Phone>
 );
 
-const Asetukset = ({ onNav }) => (
+const Asetukset = ({ onNav: _onNav }) => (
   <Phone title="Profiili">
     <div style={{ padding: "16px" }}>
 
